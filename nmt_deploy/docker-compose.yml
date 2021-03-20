@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+    backend:
+        image: ${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}:${BACKEND_TAG}
+        environment: 
+            - POSTGRES_HOST
+            - POSTGRES_PORT
+            - POSTGRES_DB
+            - POSTGRES_USER
+            - POSTGRES_PASSWORD
+            - DEBUG_VALUE
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+            - AWS_STORAGE_BUCKET_NAME
+            - AWS_S3_REGION_NAME
+            - CONF_JWT_SECRET
+            - CONF_BASE_DOMAIN
+        volumes: 
+            - ./media/:/usr/src/app/media/
+        ports:
+            - '${BACKEND_MAPPED_PORT}:${BACKEND_DOCKER_PORT}'
+
+    pgadmin:
+        image: dpage/pgadmin4:${PGADMIN_TAG}
+        environment:
+            - PGADMIN_DEFAULT_EMAIL
+            - PGADMIN_DEFAULT_PASSWORD
+        ports:
+            - "${PGADMIN_MAPPED_PORT}:${PGADMIN_DOCKER_PORT}"
+    
+    redis:
+        image: redis:${REDIS_TAG}
+        command: redis-server --appendonly yes
+        ports:
+          - 6379:6379
+        volumes:
+          - redis_data:/data
+
+volumes:
+    redis_data:

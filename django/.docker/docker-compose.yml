@@ -1,0 +1,10 @@
+version: '3'
+services:
+    django:        
+        build:
+            dockerfile: .docker/images/django/Dockerfile
+            context: ./..        
+        volumes:
+            - "./../:/var/www/project"
+        ports:
+            - "8000:8000"

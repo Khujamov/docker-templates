@@ -1,0 +1,27 @@
+version: '3'
+services:
+  java:
+    build:
+      context: ./..
+      dockerfile: ./.docker/jdk11/Dockerfile
+    volumes:
+      - ./..:/var/www
+    depends_on:
+      - mysql      
+    environment:
+      - "DB_PORT={$MYSQL_PORT}"
+      - "DB_HOST=mysql"   
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+    ports:
+      - "3306:3306"  

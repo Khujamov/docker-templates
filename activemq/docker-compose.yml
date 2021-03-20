@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  activemq:
+    image: rmohr/activemq:5.15.9
+    container_name: activemq
+    environment:
+      - "TZ={TIMEZONE}"
+      - "ACTIVEMQ_ADMIN_LOGIN={ACTIVEMQ_ADMIN_LOGIN}"
+      - "ACTIVEMQ_ADMIN_PASSWORD={ACTIVEMQ_ADMIN_PASSWORD}"
+    volumes:
+      - "./activemq/activemq.xml:/conf/activemq.xml"
+    ports:
+      # ui
+      - "8161:8161"
+      # amqp
+      - "5672:5672"
+      # stomp
+      - "61613:61613"
+      # ws
+      - "61614:61614"
+      # mqtt
+      - "1883:1883"
+      # jms, broker
+      - "61616:61616"
