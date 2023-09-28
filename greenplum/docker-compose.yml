@@ -1,0 +1,7 @@
+version: '3'
+services:
+  greenplum:
+    container_name: greenplum
+    image: git2.ssdsoftwaresolutions.com:5050/cdp/cdp-docs/greenplum:6.23.0
+    ports:
+      - "5433:5432"
