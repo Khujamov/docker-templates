@@ -1,0 +1,12 @@
+name: local-axon-server
+services:
+  axon-server:
+    image: axoniq/axonserver
+    container_name: local-axon-server
+    volumes:
+      - axon-data:/axonserver
+    ports:
+      - "8024:8024"
+      - "8124:8124" 
+volumes:
+  axon-data:    
